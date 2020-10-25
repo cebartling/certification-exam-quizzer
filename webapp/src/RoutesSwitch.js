@@ -3,6 +3,7 @@ import React from 'react';
 import WelcomeView from './views/welcome/WelcomeView';
 import {Route, Switch} from 'react-router-dom';
 import FrontDoorView from './views/front_door/FrontDoorView';
+import DashboardView from "./views/dashboard/DashboardView";
 
 
 const RoutesSwitch = (props) => {
@@ -14,6 +15,9 @@ const RoutesSwitch = (props) => {
       </Route>
       <Route exact path="/welcome">
         <WelcomeView/>
+      </Route>
+      <Route exact path="/dashboard">
+        <DashboardView/>
       </Route>
     </Switch>
   );
