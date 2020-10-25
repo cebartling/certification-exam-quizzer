@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import * as firebase from 'firebase/app';
 import * as firebaseui from 'firebaseui';
+import 'firebaseui/dist/firebaseui.css';
 
 // If you enabled Analytics in your project, add the Firebase SDK for Analytics
 import 'firebase/analytics';
@@ -31,40 +32,81 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const firebaseAuthUI = new firebaseui.auth.AuthUI(firebase.auth());
-firebaseAuthUI.start('#firebaseui-auth-container', {
-  callbacks: {
-    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-      // User successfully signed in.
-      // Return type determines whether we continue the redirect automatically
-      // or whether we leave that to developer to handle.
-      return true;
-    },
-    uiShown: function() {
-      // The widget is rendered.
-      // Hide the loader.
-      // document.getElementById('loader').style.display = 'none';
-    }
-  },
-  // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-  signInFlow: 'popup',
-  signInSuccessUrl: '/',
-  signInOptions: [
-    {
-      provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      scopes: [
-        'https://www.googleapis.com/auth/contacts.readonly'
-      ],
-      customParameters: {
-        // Forces account selection even when one account is available.
-        prompt: 'select_account'
+
+if (firebaseAuthUI.isPendingRedirect()) {
+  firebaseAuthUI.start('#firebaseui-auth-container', {
+    callbacks: {
+      signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+        // User successfully signed in.
+        // Return type determines whether we continue the redirect automatically
+        // or whether we leave that to developer to handle.
+        console.log('signInSuccessWithAuthResult', authResult);
+        return true;
+      },
+      uiShown: function () {
+        // The widget is rendered.
+        // Hide the loader.
+        // document.getElementById('loader').style.display = 'none';
       }
     },
-  ]
+    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+    // signInFlow: 'popup',
+    signInSuccessUrl: '/',
+    signInOptions: [
+      {
+        provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        scopes: [
+          'https://www.googleapis.com/auth/contacts.readonly'
+        ],
+        customParameters: {
+          // Forces account selection even when one account is available.
+          prompt: 'select_account'
+        }
+      },
+    ]
+  });
+}
+
+const initializeFirebaseApp = function () {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // User is signed in.
+      const {displayName, email, emailVerified, photoURL, uid, phoneNumber, providerData} = user;
+
+      user.getIdToken().then(function (accessToken) {
+        // document.getElementById('sign-in-status').textContent = 'Signed in';
+        // document.getElementById('sign-in').textContent = 'Sign out';
+        // document.getElementById('account-details').textContent = JSON.stringify({
+        //   displayName: displayName,
+        //   email: email,
+        //   emailVerified: emailVerified,
+        //   phoneNumber: phoneNumber,
+        //   photoURL: photoURL,
+        //   uid: uid,
+        //   accessToken: accessToken,
+        //   providerData: providerData
+        // }, null, '  ');
+        console.log('User signed in');
+      });
+    } else {
+      // User is signed out.
+      console.log('User signed out')
+      // document.getElementById('sign-in-status').textContent = 'Signed out';
+      // document.getElementById('sign-in').textContent = 'Sign in';
+      // document.getElementById('account-details').textContent = 'null';
+    }
+  }, function (error) {
+    console.error(error);
+  });
+};
+
+window.addEventListener('load', function () {
+  initializeFirebaseApp()
 });
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );
