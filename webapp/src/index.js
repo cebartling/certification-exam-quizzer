@@ -33,7 +33,7 @@ const initializeFirebaseApp = function () {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
-      const {displayName, email, emailVerified, photoURL, uid, phoneNumber, providerData} = user;
+      // const {displayName, email, emailVerified, photoURL, uid, phoneNumber, providerData} = user;
 
       user.getIdToken().then(function (accessToken) {
         // document.getElementById('sign-in-status').textContent = 'Signed in';

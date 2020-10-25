@@ -1,13 +1,11 @@
 import React from 'react';
-import PropTypes from "prop-types";
-import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import useStyles from "../../styles/UseStyles";
 import clsx from "clsx";
+import useViewStyles from "../../styles/ViewStyles";
 
 const DashboardView = () => {
-  const classes = useStyles();
+  const classes = useViewStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (

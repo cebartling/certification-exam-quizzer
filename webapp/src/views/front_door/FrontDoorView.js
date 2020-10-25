@@ -2,8 +2,10 @@ import React from 'react';
 // import PropTypes from "prop-types";
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import useViewStyles from "../../styles/ViewStyles";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 // Configure FirebaseUI.
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
@@ -17,13 +19,16 @@ const uiConfig = {
 };
 
 const FrontDoorView = () => {
+  const classes = useViewStyles();
 
   return (
-    <div>
-      <h1>My App</h1>
-      <p>Please sign-in:</p>
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
-    </div>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Paper className={classes.paper}>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 };
 
