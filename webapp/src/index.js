@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import * as firebase from 'firebase/app';
+import * as firebaseui from 'firebaseui';
 
 // If you enabled Analytics in your project, add the Firebase SDK for Analytics
 import 'firebase/analytics';
@@ -21,13 +22,45 @@ const firebaseConfig = {
   databaseURL: "https://certification-exam-quizzer.firebaseio.com",
   projectId: "certification-exam-quizzer",
   storageBucket: "certification-exam-quizzer.appspot.com",
-  messagingSenderId: "552247886203",
-  appId: "1:552247886203:web:ace1d4bf289dc058dcbdde",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: "G-HN47Z70H9C"
 };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+const firebaseAuthUI = new firebaseui.auth.AuthUI(firebase.auth());
+firebaseAuthUI.start('#firebaseui-auth-container', {
+  callbacks: {
+    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+      // User successfully signed in.
+      // Return type determines whether we continue the redirect automatically
+      // or whether we leave that to developer to handle.
+      return true;
+    },
+    uiShown: function() {
+      // The widget is rendered.
+      // Hide the loader.
+      // document.getElementById('loader').style.display = 'none';
+    }
+  },
+  // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+  signInFlow: 'popup',
+  signInSuccessUrl: '/',
+  signInOptions: [
+    {
+      provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      scopes: [
+        'https://www.googleapis.com/auth/contacts.readonly'
+      ],
+      customParameters: {
+        // Forces account selection even when one account is available.
+        prompt: 'select_account'
+      }
+    },
+  ]
+});
 
 ReactDOM.render(
   <React.StrictMode>
