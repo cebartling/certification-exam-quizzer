@@ -23,6 +23,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import {makeStyles} from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
 
 const drawerWidth = 240;
 
@@ -100,9 +101,9 @@ const useStyles = makeStyles((theme) => ({
   //   overflow: 'auto',
   //   flexDirection: 'column',
   // },
-  fixedHeight: {
-    height: 240,
-  },
+  // fixedHeight: {
+  //   height: 240,
+  // },
 }));
 
 export const mainListItems = (
@@ -112,6 +113,12 @@ export const mainListItems = (
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
+    </ListItem>
+    <ListItem button component={Link} to="/editor/exam">
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Editor" />
     </ListItem>
   </div>
 );
@@ -156,13 +163,13 @@ function App() {
               <MenuIcon />
             </IconButton>
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-              Dashboard
+              Certification Exam Quizzer
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            {/*<IconButton color="inherit">*/}
+            {/*  <Badge badgeContent={4} color="secondary">*/}
+            {/*    <NotificationsIcon />*/}
+            {/*  </Badge>*/}
+            {/*</IconButton>*/}
           </Toolbar>
         </AppBar>
         <Drawer
@@ -186,9 +193,11 @@ function App() {
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
             <RoutesSwitch/>
-            {/*<Box pt={4}>*/}
-            {/*  <Copyright />*/}
-            {/*</Box>*/}
+            <Box pt={4}>
+              <Typography>
+                Copyright goes here
+              </Typography>
+            </Box>
           </Container>
         </main>
       </div>
