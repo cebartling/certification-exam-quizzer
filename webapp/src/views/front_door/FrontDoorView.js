@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from "prop-types";
-import * as firebase from 'firebase/app';
+import firebase from 'firebase';
 import 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import useViewStyles from "../../styles/ViewStyles";
