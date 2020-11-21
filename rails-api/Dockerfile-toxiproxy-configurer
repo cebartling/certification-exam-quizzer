@@ -1,0 +1,6 @@
+FROM alpine:latest
+
+RUN apk update
+RUN apk upgrade
+RUN apk add curl bash
+CMD curl -s -XPOST -d '{"name" : "certification-exam-quizzer-db", "listen" : "certification-exam-quizzer-toxiproxy:22220", "upstream" : "certification-exam-quizzer-db:5432"}' http://certification-exam-quizzer-toxiproxy:8474/proxies
