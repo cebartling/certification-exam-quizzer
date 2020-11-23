@@ -1,6 +1,6 @@
 class CreateCertificationExamTopics < ActiveRecord::Migration[6.0]
   def change
-    create_table :certification_exam_topics do |t|
+    create_table :certification_exam_topics, id: :uuid do |t|
       t.uuid :certification_exam_id, null: false
       t.string :name, null: false, limit: 255
       t.timestamps
