@@ -6,5 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'seeds/users/users_seed'
+require 'seeds/certification_exams/certification_exams_seed'
 
 Seeds::Users::UsersSeed.execute
+Seeds::CertificationExams::CertificationExamsSeed.execute

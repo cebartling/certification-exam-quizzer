@@ -1,0 +1,2 @@
+class CertificationExam < ApplicationRecord
+end
