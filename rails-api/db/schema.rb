@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_11_23_040620) do
     t.string "username", limit: 255, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["username"], name: "users_username_unique_idx", unique: true
   end
 
   add_foreign_key "certification_exam_topics", "certification_exams"
