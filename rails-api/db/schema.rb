@@ -10,17 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_23_033708) do
+ActiveRecord::Schema.define(version: 2020_11_23_040620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "certification_exam_topics", force: :cascade do |t|
+    t.uuid "certification_exam_id", null: false
+    t.string "name", limit: 255, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "certification_exam_topics_name_unique_idx", unique: true
+  end
 
   create_table "certification_exams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", limit: 1024, null: false
     t.string "exam_code", limit: 50, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "certification_exams_name_unique_idx", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -31,4 +40,5 @@ ActiveRecord::Schema.define(version: 2020_11_23_033708) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "certification_exam_topics", "certification_exams"
 end
