@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_23_143658) do
+ActiveRecord::Schema.define(version: 2020_11_24_055003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -39,6 +39,13 @@ ActiveRecord::Schema.define(version: 2020_11_23_143658) do
     t.integer "difficulty", default: 1, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "exam_questions_topics", id: false, force: :cascade do |t|
+    t.bigint "certification_exam_topics_id"
+    t.bigint "exam_questions_id"
+    t.index ["certification_exam_topics_id"], name: "index_exam_questions_topics_on_certification_exam_topics_id"
+    t.index ["exam_questions_id"], name: "index_exam_questions_topics_on_exam_questions_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
