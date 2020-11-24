@@ -16,14 +16,6 @@ ActiveRecord::Schema.define(version: 2020_11_24_060953) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "certification_exam_topics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "certification_exam_id", null: false
-    t.string "name", limit: 255, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "certification_exam_topics_name_unique_idx", unique: true
-  end
-
   create_table "certification_exams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", limit: 1024, null: false
     t.string "exam_code", limit: 50, null: false
@@ -51,10 +43,16 @@ ActiveRecord::Schema.define(version: 2020_11_24_060953) do
   end
 
   create_table "exam_questions_topics", id: false, force: :cascade do |t|
-    t.bigint "certification_exam_topics_id"
-    t.bigint "exam_questions_id"
-    t.index ["certification_exam_topics_id"], name: "index_exam_questions_topics_on_certification_exam_topics_id"
-    t.index ["exam_questions_id"], name: "index_exam_questions_topics_on_exam_questions_id"
+    t.uuid "exam_question_id", null: false
+    t.uuid "exam_topic_id", null: false
+  end
+
+  create_table "exam_topics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "certification_exam_id", null: false
+    t.string "name", limit: 255, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "exam_topics_name_unique_idx", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -66,7 +64,9 @@ ActiveRecord::Schema.define(version: 2020_11_24_060953) do
     t.index ["username"], name: "users_username_unique_idx", unique: true
   end
 
-  add_foreign_key "certification_exam_topics", "certification_exams"
   add_foreign_key "exam_question_responses", "exam_questions"
   add_foreign_key "exam_questions", "certification_exams"
+  add_foreign_key "exam_questions_topics", "exam_questions"
+  add_foreign_key "exam_questions_topics", "exam_topics"
+  add_foreign_key "exam_topics", "certification_exams"
 end
