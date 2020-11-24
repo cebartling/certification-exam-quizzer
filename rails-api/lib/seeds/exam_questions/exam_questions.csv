@@ -1,0 +1,3 @@
+exam_name,difficulty,single_answer,question_text
+AWS Certified Solution Architect - Associate 2020,1,true,"Who is responsible for protecting the infrastructure that runs all of the services offered in the AWS Cloud?"
+AWS Certified Solution Architect - Associate 2020,1,true,"Who is responsible for protecting resources, including network level security (NACLs, security groups), IAM user access management, and client and server side data encryption?"

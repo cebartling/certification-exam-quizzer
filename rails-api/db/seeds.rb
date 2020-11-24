@@ -8,7 +8,9 @@
 require 'seeds/users/users_seed'
 require 'seeds/certification_exams/certification_exams_seed'
 require 'seeds/certification_exam_topics/certification_exam_topics_seed'
+require 'seeds/exam_questions/exam_questions_seed'
 
 Seeds::Users::UsersSeed.execute
 Seeds::CertificationExams::CertificationExamsSeed.execute
 Seeds::CertificationExamTopics::CertificationExamTopicsSeed.execute
+Seeds::ExamQuestions::ExamQuestionsSeed.execute
